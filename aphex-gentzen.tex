@@ -1,0 +1,502 @@
+\documentclass[a4paper,12pt]{aphex}
+\input{header}
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts}
+\usepackage[applemac]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[italian]{babel}
+\usepackage{newlfont}
+\usepackage{proof}
+\usepackage{cancel}
+
+\begin{document}
+
+\title{
+\mbox{} \\
+{\mysixt{T \,\,\, E \,\,\, M \,\,\, I}} \\[-2mm]
+\textsc{
+\noindent
+\mybig{\textls[-50]{Gherard Gentzen}}}
+}
+\author{Francesca Poggiolesi}
+
+\maketitle
+\thispagestyle{front}
+%\def\abstractname{ABSTRACT}
+
+\begin{abstract}
+{\footnotesize
+{\setlength{\baselineskip}
+{0.5\baselineskip}
+\emph{\noindent 
+ABSTRACT -- Gherard Gentzen (1909-1945) � uno dei pi� illustri protagonisti  della logica matematica e  una delle pi� grandi figure del pensiero del  novecento. Padre dei famosi calcoli di deduzione naturale e delle sequenze, grazie ai suoi risultati ha saputo, almeno in parte, superare i famosi teoremi limitativi g\"odeliani. Il presente profilo si propone di ripercorrere e illustrare, in maniera semplice e chiara, alcuni fra i suoi contributi pi� importanti, dedicando un�attenzione particolare alla loro rilevanza filosofica. }
+\par}}
+%KEYWORDS: automi a stati finiti, macchina di Turing,
+%linguaggi formali, grammatiche a struttura di frase.
+\end{abstract}
+\vspace*{-155mm}
+{\mynine{
+APhEx 14, 2016 (ed.~Vera Tripodi) \\[-5pt]
+Ricevuto il: 06/07/2015 \\[-5pt]
+Accettato il: 19/02/2016 \\[-5pt]
+Redattore: Valeria Giardino}
+\begin{flushright}
+%\includegraphics{logo}
+\includegraphics[width=77.82mm]{aphex}
+\\[-5pt] \sffamily
+\underline{\textbf{\scriptsize{N}$^{{\circ}}$\mynine{14}
+\mynine{G}\scriptsize{IUGNO} \mynine{2016}}}
+\\[122mm]
+\end{flushright}
+\par}
+%% \def\thesection{}
+\def\contentsname{} 
+\def\refname{\textsc{Riferimenti bibliografici}}
+\tableofcontents
+
+\section{\textsc{Cenni Biografici}}
+
+Gherard Gentzen  nasce il 24 Novembre 1909 a Greifswald in Germania da famiglia benestante (il padre � un avvocato che muore durante la prima guerra mondiale). Ottiene il diploma di maturit� nel 1928 a Stralsund, e in seguito, in linea con la prassi dell�epoca, conduce i suoi studi di matematica tra varie universit�, ossia Greifswald stessa, G�ttingen, Monaco e Berlino. Tra i suoi insegnanti ricordiamo P. Bernays, C. Carath�odory, R. Courant, D. Hilbert, M. Kneser, E. Landau.
+ Nel 1933 Gentzen ottiene il suo diploma di dottorato a G�ttingen sotto la direzione di H. Weyl e dal 1934 al 1943 continua le sue ricerche a G�ttingen  come assistente di D. Hilbert.  Sono questi gli anni in cui Gentzen pubblica i suoi lavori pi� importanti che contribuiscono alla realizzazione del programma hilbertiano sull�assiomatizzazione della matematica. 
+
+L�inizio della seconda guerra mondiale  costringe Gentzen ad interrompere il suo lavoro: dal 1939 al 1941 intraprende infatti il servizio militare come addetto alle telecomunicazioni. Le sue precarie condizione di salute gli impongono di ritornare presto a casa dove riprende immediatamente le sue ricerche e difende con successo la sua tesi di abilitazione, intitolata  \emph{Beweisbarkeit und Beweisbarkeit von Anfangs Fallen der transfiniten Induktion in der reinen Zahlentheorie} (dimostrabili\`a e non-dimostrabilit\`a dei casi iniziali dell'induzione transifnita nella teoria pura dei numeri),  nel 1942. 
+Nel 1943, nel contesto dello sforzo bellico tedesco, inizia ad insegnare presso l�Istituto matematico dell�Universit� tedesca di Praga dove rimane per due anni. Il 5 Maggio del 1945 i cittadini praghesi insorgono contro l�occupazione tedesca e arrestano e consegnano alle forze russe l�intero personale dell�Universit� tedesca. Gentzen viene cos� internato e muore tre mesi pi� tardi di malnutrizione.  
+
+Un acceso dibattito � sorto sulle non chiare idee e preferenze politiche di Gentzen nel delicato periodo della seconda guerra mondiale. Nel 1937 Gentzen aderisce al partito nazista e durante la sua permanenza in Cecoslovacchia partecipa ad un contratto di ricerca per le SS. D�altra parte, vari studiosi (si veda per esempio  \cite{menzler}) hanno tentato di ricontestualizzare tali scelte insistendo sull�immagine di un genio introverso e ingenuo che, pur avendo cos� tanto da offrire alla scienza, male capiva e interpretava gli eventi e le problematiche socio-politiche legate alla sua epoca.
+
+\section{\textsc{Il contesto storico-filosofico}}
+
+Il lavoro di Gherard Gentzen ricopre un ruolo fondamentale nello sviluppo della logica e della filosofia della logica: i suoi risultati hanno dato vita a quel campo oggi chiamato  \emph{teoria della dimostrazione} che rappresenta una delle aree pi� ricche ed importanti della logica contemporanea. Nelle sezioni 3-6 ci occuperemo di spiegare i principali risultati di Gentzen in maniera approfondita e dettagliata. Tuttavia riteniamo importante utilizzare una sezione di questo profilo per tracciare brevemente il contesto storico-filosofico in cui questi risultati sono stati elaborati: crediamo infatti che solo in questo modo sia possibile apprezzarne adeguatamente  la portata innovativa. 
+
+Da Aristotele ed Euclide fino a I. Newton o B. Pascal, l�organizzazione assiomatica di una disciplina matematica ha sempre avuto un ruolo centrale nel pensiero umano. L�idea principale di tale organizzazione � di identificare un numero possibilmente ristretto di proposizioni vere, o appunto assiomi, a cui ogni altra proposizione vera possa essere ridotta tramite dimostrazione.  La verit� degli assiomi deve essere immediata, mentre la verit� delle altre proposizioni � assicurata dalle dimostrazioni che hanno il compito di trasmettere evidenza lungo tutto il loro percorso. Il fondamento di una teoria assiomatica ha pertanto carattere puramente intuitivo o extra-logico: il perno della teoria sono gli assiomi e la loro giustificazione sola si basa sul loro essere evidenti. 
+Tale concezione dell�organizzazione assiomatica, prevalente e predominante per secoli, � messa in discussione e radicalmente trasformata dalle scoperte di met� ottocento dei matematici C. Gauss, N. Lobacewski e J. Bolayi. I tre pensatori di origine, rispettivamente, tedesca, russa e ungherese, osano infatti rinunciare al famoso quinto postulato di Euclide e danno cos� vita alle ormai note geometrie non-euclidee. I loro risultati non solo s�impongono nel mondo delle scoperte matematiche, ma anche, e forse soprattutto, obbligano a rinunciare d�un sol colpo al modello assiomatico cos� com�era stato fino ad allora inteso e concepito:  l�intuizione (che ci aveva portato e credere erroneamente nella verit� del quinto postulato di Euclide) non pu� pi� essere considerata come capace di dare fondamento alle teorie assiomatiche e la domanda si pone su cosa possa sostituirla al fine di svolgere il ruolo di garante della legittimit� di un sistema formale. 
+Le risposte a queste domande e il punto d�arrivo di quella che � stata mirabilmente descritta da E. Casari (si veda \cite{casari}) come vera e propria �rivoluzione assiomatica� � il lavoro di D. Hilbert, che insieme ad altri matematici e logici del calibro di G. Peano, P. Bernays,  W. Ackermann, J. Von Neumann e J. Herbrand, contribuisce a creare una nuova concezione dell�organizzazione assiomatica. 
+Senza voler entrare in dettagli che ci porterebbero troppo lontano dal principale oggetto di questo profilo, ci limitiamo a sottolineare tre aspetti centrali della nuova maniera di concepire le teorie assiomatiche che si impone all�inizio del 1900. Innanzitutto si assiste ad una completa formalizzazione delle teorie matematiche, dove per formalizzazione si intende una totale esplicitazione del bagaglio linguistico ammesso e delle sue possibili regole di combinazione. In secondo luogo si osserva un nuovo modo di giustificare una teoria in termini di dimostrazione della sua non-contradditoriet�, ossia l�impossibilit� di ottenere una dimostrazione che termina con una proposizione congiunta con la sua negazione. In terzo ed ultimo luogo, si  insiste sulla necessit� di utilizzare metodi prettamente finitisti (ossia procedimenti di definizione e dimostrazione delimitati al finito) per giustificare una teoria. Una teoria assiomatica � dunque sempre caratterizzata dalla presenza di assiomi e regole di inferenze ma questi hanno ora carattere puramente formale, finitista e la loro giustificazione non sta pi� nell�intuizione ma in una mera dimostrazione di non-contradditoriet�.
+Il famoso programma hilbertiano per la fondazione della matematica si articola esattamente lungo questi termini: il suo nodo centrale consiste nella dimostrazione, con mezzi rigorosamente finitisti, della non-contraddittoriet� del sistema formale della teoria dei numeri naturali. 
+
+
+In questo panorama logico-matematico arrivano come un fulmine a ciel sereno i famosi risultati d�incompletezza dell�austriaco K. G�del.\footnote{Per maggiori dettagli su questo punto si veda il profilo redatto da R. Bruni, �K. G�del�.}  Tra questi, quello che pi� ci preme sottolineare � il famoso  secondo teorema di incompletezza in cui G�del dimostra l�indimostrabilit� della non-contraddittoriet� di un sistema formale capace di internalizzare i suoi propri mezzi di dimostrazione.  In altre parole, grazie a G�del, si capisce che, non solo il programma di Hilbert non � stato ancora realizzato, ma che in linea di principio non � possibile farlo, ossia che non � possibile dimostrare con mezzi puramente finitisti la non-contradditoriet� del sistema formale della teoria dei numeri naturali. 
+ 
+E' difficile qui poter riassumere l�impatto e la portata del lavoro g�edeliano; si tratta senza ombra di dubbio  di un momento di svolta fondamentale del pensiero umano, la cui influenza � presente nella logica, nella matematica e nella filosofia contemporanee. Le scoperte di G�del sono state oggetto di studi e di chiarificazioni per pi� di cinquant�anni e le ripercussioni del suo lavoro sono immense. 
+Uno dei primi matematici che contribuisce alla chiarificazione stessa del significato dei risultati g�edeliani � il nostro Gherard Gentzen. L�allievo di Hilbert non solo capisce profondamente la portata dei lavori del pensatore austriaco, ma anche e soprattutto non se ne lascia sopraffare: riesce, infatti, a gettare le basi per una moderna e post-hilbertiana teoria della dimostrazione. Termineremo la sezione illustrando schematicamente i contributi di Gentzen alla luce di ci� che � stato spiegato sinora. Indicheremo infine quali di questi risultati verr�  discusso in dettaglio nelle prossime sezioni.
+
+\begin{itemize}
+\item[a.]	Gentzen elabora un tipo di sistema formale alternativo a quello usato da Hilbert che chiama \emph{calcolo di deduzione naturale}. La principale differenza tra i sistemi alla Hilbert e i calcoli di deduzione naturale sta nel ruolo e l'importanza data ad assiomi e regole d'inferenza.
+
+\item[b.]	Volendo dimostrare l�analiticit� dei suoi calcoli di deduzione naturale, ma trovando in qualche modo scomodo il formalismo di questi ultimi, Gentzen elabora un secondo tipo di sistema formale chiamato \emph{calcolo delle sequenze}. 
+
+%I calcoli delle sequenze, che si pu� dimostrare essere equivalenti ai calcoli di deduzione naturale, non solo hanno la prerogativa di far emergere naturalmente la parte strutturale di ogni logica, ma in pi� consentono una maggiore agilit� dimostrativa.
+
+
+\item[c.]	Grazie ai calcoli delle sequenze Gentzen dimostra il famoso \emph{Hauptsatz} o \emph{teorema di eliminazione delle cesure}, oggi considerato come il risultato centrale della teoria della dimostrazione. Gentzen usa il teorema di eliminazione delle cesure per provare la consistenza della logica predicativa classica e intuizionista e per risolvere il problema della decidibilit� della logica intuizionista.
+
+\item[d.]	Utilizzando una forma pi� sofisticata del teorema di eliminazione delle cesure,  comunemente detta  \emph{teorema di Gentzen-Herbrand}, e la famosa \emph{propriet� della sottoformula}, Gentzen riesce a dimostrare la non-contraddittoriet� dell�aritmetica senza l�induzione completa (si veda  \cite{casari} o  \cite{KR}). 
+
+\item[e.]	 Rendendosi perfettamente conto della scarsa importanza dell�aritmetica senza induzione completa, ma dovendo al contempo fare fronte ai teoremi d�incompletezza di G�del e le restrizioni da questi imposte, Gentzen riesce a elaborare un principio logico � una regola d'induzione transfinita ristretta fino al primo numero $\epsilon_{0}$ di Cantor � non formalizzabile nell�aritmetica classica, ma comunque interpretabile  costruttivamente e intuizionisticamente del tutto accettabile,  che, se ammesso nella sfera della metamatematica, rende possibile la dimostrazione della non-contraddittoriet� del sistema formale della teoria elementare dei numeri.  
+
+Arduo � riuscire a descrivere adeguatamente il grande valore e l�indubbia importanza di questo risultato di Gentzen. Con un solo teorema Gentzen perviene non solo a fornire un enorme contributo al programma hilbertiano, ossia il colossale progetto del suo mentore, ma anche, e forse soprattutto, ad aggirare i monumentali risultati limitativi g�deliani. Gentzen prova che � di fatto  possibile dimostrare la non-contradditoriet� della teoria elementare dei numeri a patto che si sostituisca i metodi rigorosamente finitisti descritti da Hilbert con principi logici comunque costruttivamente accettabili. 
+
+\end{itemize}
+
+Nelle sezioni che seguiranno, non ci soffermeremo su ogni risultato gentzeniano schematicamente illustrato in uno dei punti a-e, ma spiegheremo in dettaglio solo quei risultati che pi� hanno influenzato il mondo filosofico e logico filosofico. Ci soffermeremo dunque sui calcoli di deduzione naturale (Sezione 3), i calcoli delle sequenze (sezione 4), la propriet� della sottoformula, il teorema di eliminazione delle cesure e la questione dell�analiticit� della dimostrabilit� logica (Sezione 5). Per quanto riguarda i risultati di Gentzen legati alla dimostrazione della non-contradditoriet� della teoria dei numeri naturali e al principio d�induzione transfinita, avendo questi carattere molto tecnico, non verranno affrontati ulteriormente.
+
+\vspace{0.2cm}
+
+
+\section{\textsc{Il calcolo di deduzione naturale}}
+
+
+Partiamo dal concetto di sistema formale. Per definire il concetto di sistema formale dobbiamo in realt� cominciare dalla nozione di linguaggio formale. Cerchiamo dunque di definire la nozione di linguaggio formale. Molto semplicemente, un linguaggio formale si costituisce in due tappe fondamentali: la specificazione del suo alfabeto, ossia del bagaglio simbolico di cui � costituito, e l�isolamento, fra tutte le combinazioni possibili dei simboli di tale alfabeto, di quelle combinazioni  che sono usate per assolvere funzioni espressive, ossia le formule. 
+Una volta chiarita la nozione di linguaggio formale, � facile passare al concetto di sistema formale. Questo si costituisce attraverso l�imposizione ad un linguaggio formale del concetto di dimostrazione formale, ossia di successione di formule, proprie del linguaggio formale, ottenuta seguendo uno specifico sistema di prescrizioni, detti postulati (ossia gli assiomi e le regole di inferenza). 
+
+I primi sistemi formali (quelli che oggi sono comunemente chiamati \emph{sistemi alla Hilbert}) sono proposti ed usati dai grandi logici dell�ottocento e novecento, ossia G. Frege, B. Rusell, A. Whitehead e il gi� menzionato D. Hilbert e  sono composti (ossia i loro postulati consistono in) da un rilevante numero di assiomi ed poche, se non addirittura una sola, regola di inferenza. Tra gli anni 1920 e 1930, la scuola logica polacca, e in particolare J. \L{}ukasiewicz e S. Ja\'skowski, inizia a mostrare una certa insoddisfazione per tali tipi di sistema formale: in questi il modo di sviluppare una dimostrazione � infatti complicato e distante dalle forme   inferenziali usate in matematica. I logici polacchi iniziano a reclamare un trattamento pi� naturale della logica (si veda per esempio \cite{anellis}).  I calcoli di deduzione naturale, che precisamente assolvono questa funzione, sono introdotti da Gentzen nel 1934-1935. Il termine \emph{nat�rliches Schlie�en} (deduzione naturale) � coniato da Gentzen stesso che motiva l�introduzione di questo nuovo tipo di sistema formale nel modo seguente:
+
+\begin{quotation}
+Il mio punto di partenza � stato questo: la formalizzazione dell�inferenza logica, in particolare cos� come questa � stata sviluppata da Frege, Russell e Hilbert, � molto lontana dalle forme di deduzione usate nella pratica matematica. Se ne sono avuti in cambio considerevoli vantaggi formali. Io, al contrario, intendo innanzitutto costruire un sistema formale che arrivi quanto pi� possibile  vicino al ragionamento reale. \cite[p. 68]{gentzen} \emph{(nostra traduzione)}
+\end{quotation}
+
+
+La principale differenza fra i calcoli di deduzione naturale e i sistemi alla Hilbert consiste in una inversione completa del rapporto fra assiomi e regole di inferenza: se i sistemi alla Hilbert sono composti da un cospicuo numero di assiomi e poche, se non addirittura una sola, regola di inferenza, i calcoli di deduzione naturale sono composti esclusivamente da regole di inferenza e nessun assioma. E� proprio questa inversione di proporzioni fra regole e assiomi che permette di avere, come dice lo stesso Gentzen, un formalismo pi�  prossimo al ragionamento umano. 
+
+%Se, infatti, l�uso degli assiomi consente di far emergere l�aspetto ontologico di una logica, � solo grazie all�uso delle regole d�inferenza che un maggiore spazio pu� essere accordato al versante epistemico  della stessa. 
+
+Entriamo ora pi� nel dettaglio e vediamo comՏ fatto un calcolo di deduzione naturale.  Innanzitutto deve essere sottolineato che i calcoli di deduzione naturale introdotti dal nostro logico tedesco (si tratta di calcoli di deduzione naturale per la logica classica e intuizionista del primo ordine) sono in generale composti da regole di estrema semplicit�: sembra che Gentzen, con un mirabile lavoro di cesello, sia riuscito ad identificare le parti pi� elementari e costanti della deduzione  nella pratica matematica per poi formalizzarle sotto forma di inferenze logiche. 
+
+
+Ogni regola di un calcolo di deduzione naturale � associata con una e una sola costante logica: essa pu� introdurre la costante logica ed � allora detta \emph{regola d�introduzione} o eliminare la costante ed � allora detta \emph{regola di eliminazione}. Supponiamo di avere a che fare con le costanti del linguaggio formale proposizionale (della logica classica), ossia negazione, congiunzione, disgiunzione, implicazione; per ognuna di queste costanti avremo almeno due regole, una d�introduzione e una di eliminazione (ossia avremo un totale di almeno otto regole).  L�insieme di tali regole corrisponde al calcolo di deduzione naturale per la logica classica basata sul linguaggio formale proposizionale.
+
+
+Una volta specificato l�insieme delle regole che formano un calcolo di deduzione naturale, s�indica come queste regole possono essere combinate fra loro in modo da formare  \emph{derivazioni}; le derivazioni hanno la forma di alberi le cui foglie sono occupate dalle assunzioni e la cui radice � occupata da ci� che si vuole dimostrare, ossia il \emph{teorema}. In linea con quello che � stato detto in precedenza, insistiamo sul fatto che le derivazioni del calcolo della deduzione naturale devono essere viste come una sorta di struttura soggiacente ad ogni ragionamento umano; in altre parole, esse rappresentano lo scheletro comune del corretto argomentare matematico. Questo ci sembra essere il cuore dell�idea di Gentzen e il grande valore del suo risultato.
+
+Vediamo ora pi� in dettaglio alcune delle regole d�introduzione e d�eliminazione che formano i calcoli di deduzione naturale. Per farlo, ci sembra importante introdurre una nuova distinzione concernente tali regole.  Si tratta della distinzione tra regole contenenti il cosiddetto scaricamento di assunzioni � chiamiamo tali regole, \emph{regole SA} -- e quelle che invece non contengono tale scaricamento � chiamiamole tali regole, \emph{regole NSA}. Partiamo da queste ultime, che sono le meno complicate. Mostriamo in particolare le regole d�introduzione ed eliminazione della congiunzione, che denotiamo, come standard, con il simbolo $\wedge$. La regola d�introduzione della congiunzione � la seguente: 
+
+$$\infer[_{\wedge I}]{A\wedge B}{\deduce{A}{\vdots^{d_{1}}}{} & \deduce{B}{\vdots^{d_{2}}}{}}$$
+                          
+                                                         
+
+\noindent Questa regola ci dice che, se abbiamo una derivazione $d_{1}$  della formula A e una derivazione $d_{2}$ della formula B, allora possiamo ottenere una derivazione della formula $A\wedge B$.  
+
+Per quanto riguarda l�eliminazione della congiunzione, abbiamo in questo caso due regole: ciascuna ci permette di inferire uno dei due congiunti. Esse hanno dunque la seguente forma:
+
+
+$$\infer[_{\wedge E_{1}}]{A}{\deduce{A\wedge B}{\vdots^{d}}{}}\qquad\qquad\infer[_{\wedge E_{2}}]{B}{\deduce{A\wedge B}{\vdots^{d}}{}}$$
+
+                   
+                                           
+
+
+\noindent Altre regole che non contengono scaricamento di assunzioni sono le regole d�introduzione della disgiunzione e quella di eliminazione dell�implicazione. 
+
+Passiamo ora alle regole che includono lo scaricamento delle assunzioni; sebbene queste non siano certo complicate (il lettore ricordi che il tratto distintivo del calcolo della deduzione naturale � la presenza di  regole semplici), esse comportano un nuovo elemento che merita di essere spiegato in dettaglio. Come abbiamo appena visto, le regole NSA corrispondono ad una sola azione inferenziale, ossia l�introduzione o l�eliminazione di una costante logica; nelle regole SA, al contrario, non solo siamo impegnati nel passo inferenziale corrispondente all�introduzione o l�eliminazione di una costante logica, ma in pi� siamo obbligati ad una seconda azione, ossia quella di tornare indietro  nella derivazione e  di cancellare, o meglio scaricare, quelle assunzioni che, o sono presenti nella conclusione della regola stessa, o svolgono un ruolo particolare all�interno della derivazione. 
+Per poter meglio chiarire come siano fatte le regole SA, illustriamo la regola che introduce il connettivo dell�implicazione, che denotiamo con $\rightarrow$.  La regola d�introduzione dell�implicazione ha la forma seguente:
+
+
+$$\infer[_{\rightarrow I}]{A\rightarrow B}{\deduce{B}{\deduce{\vdots}{\cancel{A}}}}$$
+
+
+\noindent La regola deve essere letta come segue. Supponiamo di avere una derivazione che usa l�assunzione A per derivare la formula B. Allora non solo possiamo inferire e concludere $A\rightarrow B$, ma anche dobbiamo tornare indietro nella derivazione che funge da premessa della regola e scaricare l�assunzione A. In altre parole, se abbiamo una derivazione dalla formula A alla formula B, possiamo inferire $A\rightarrow B$; se compiamo tale inferenza, allora dobbiamo cancellare (ogni occorrenza del) l�assunzione A, dato che  $A\rightarrow B$ non dipende pi� da questa assunzione, o, altrimenti detto, questa assunzione � stata scaricata. Per togliere ogni dubbio sul funzionamento della regola di introduzione dell'implicazione, facciamo un esempio concreto. Prendiamo la proposizione  ``domani piove'' come nostra ipotesi di partenza. Supponiamo di derivare da tale ipotesi la proposizione  ``domani le strade saranno bagnate''. Ma da questa derivazione possiamo inferire che  ``se domani piove, allora domani le strade saranno bagnate''. Quest'ultima proposizione non dipende pi� da nessuna ipotesi, perch� quella di partenza, ossia  ``domani piove'', � stata in un certo qual modo assorbita dalla conclusione stessa.  Altre regole che comportano lo scaricamento delle assunzioni sono la regola che elimina la disgiunzione e le regole che concernono la negazione.
+
+Prima di concludere la sezione dedicata alla deduzione naturale, su cui torneremo comunque successivamente, ci preme sottolineare due punti che riteniamo importanti.
+Il primo concerne il rapporto fra regole d�introduzione e regole di eliminazione. Come abbiamo gi� detto, per ogni costante logica, ne abbiamo almeno una di ciascun tipo; il rapporto fra regola d'introduzione e regola di eliminazione di una certa costante logica non � casuale, ma al contrario,  simmetrico e speculare. Esso prende il nome di \emph{principio di inversione} (la terminologia � di \cite{Lorenzen}) ed � dettagliatamente descritto da Prawitz nel seguente passagggio: 
+
+\begin{quotation}
+la conclusione ottenuta mediante un�eliminazione non afferma niente di pi� di quello che si era gi� dovuto ottenere se la premessa maggiore dell�eliminazione � stata derivata mediante un�introduzione. Per esempio, se la premessa di una $\wedge E$ � stata derivata mediante introduzione, allora la conclusione di $\wedge E$ deve gi� comparire come una delle premesse di questa introduzione.  [. . .] In altre parole, una dimostrazione della conclusione di una eliminazione � gi� �contenuta� nelle dimostrazioni delle premesse quando la premessa maggiore � derivata mediante introduzione. Ci riferiremo a questo dicendo che le coppie
+di introduzioni e eliminazioni corrispondenti soddisfano il principio di inversione. \cite[p. 247-248]{Prawitz}
+\end{quotation}
+
+
+\noindent Il principio d�inversione ricopre un ruolo importante nel teorema di normalizzazione, di cui parleremo diffusamente nella sezione 5.
+
+
+ Il secondo ed ultimo punto che vogliamo sottolineare � che i calcoli di deduzione naturale (per la logica classica e intuizionista) sono dimostrabilmente equivalenti, ossia validi e completi rispetto, non solo i corrispondenti sistemi alla Hilbert, ma anche le corrispondenti semantiche classiche o intuizioniste.
+
+\section{\textsc{Il calcolo delle sequenze}}
+
+
+ 
+Nel 1934-1935 Gentzen introduce i calcoli di deduzione naturale per rispondere ad una esigenza di maggiore prossimit� della logica alle forme del ragionamento nelle pratica matematica. Quasi contemporaneamente Gentzen inizia a cogliere l�importanza delle propriet� di \emph{normalizzabilit�} o \emph{analiticit�} della dimostrabilit� logica che � Gentzen crede allora � difficilmente possono essere formulate nell�ambito dei calcoli della deduzione naturale. Il nostro matematico tedesco introduce cos� i calcoli delle sequenze, una sorta di sostituto tecnico dei calcoli di deduzione naturale in cui � per� possibile formulare nitidamente le gi� menzionate propriet� di nomalizzabilit� e analiticit�. 
+In questa sezione ci occuperemo di illustrare i calcoli delle sequenze in maniera dettagliata e precisa. Nella prossima sezione parleremo diffusamente di analiticit�, preoccupandoci di fare vedere perch� nei calcoli delle sequenze pi� che in quelli di deduzione naturale questa propriet� trovi un suo naturale corrispettivo formale.
+ 
+ 
+Per spiegare i calcoli delle sequenze partiamo dai calcoli di deduzione naturale. In questi, come abbiamo gi� visto, centrale � la nozione di derivazione di una certa formula o teorema B a partire da certe assunzioni $A_{1}$, .., $A_{n}$. La derivazione si sviluppa verticalmente attraverso l�uso di regole d�inferenza. Il cuore dell�idea gentzeniana � semplice e estremamente acuto: il nostro pensatore tedesco trascrive infatti le derivazioni, ossia oggetti verticali, in oggetti orizzontali e inizia a lavorare con questi ultimi. Gli oggetti orizzontali in questione non sono altro che le \emph{sequenze}  e hanno la forma $A_{1}, ..., A_{n}\Rightarrow B$, dove il cosiddetto \emph{freccione} � un segno metalinguistico che indica la derivabilit�. In altre parole, se nei calcoli di deduzione naturale si costruisce la derivazione manipolando una formula alla volta e muovendosi su e  gi� (per esempio con lo scaricamento delle assunzioni) lungo di essa, nei calcoli delle sequenze una dimostrazione � costruita operando su sequenze, ossia pi� formule alla volta, tutte disposte lungo il freccione e separate da virgole,  e nelle regole si passa da una sequenza ad un�altra (nei calcoli delle sequenze insomma si scrive e si riscrive la stessa derivazione pi� e pi� volte annotando meticolosamente tutti i cambiamenti che vengono apportati su di essa e avendoli tutti sempre ad immediata disposizione). Una sequenza della forma $A_{1}, ..., A_{n}\Rightarrow B_{1}, ..., B_{m}$ � interpretata nel modo seguente $A_{1}\wedge ...\wedge A_{n}\rightarrow B_{1}\vee ...\vee B_{m}$.
+ 
+I calcoli delle sequenze sono composti da assiomi della forma $A\Rightarrow A$ (o della forma generalizzata $A, M\Rightarrow N, A$, dove M e N sono successioni di formule) e da regole d�inferenza. Le regole d�inferenza si dividono in regole logiche e regole strutturali.    Partiamo con l�analizzare le regole logiche.  Com�era il caso per le regole del calcolo di deduzione naturale, anche ogni regola logica di un calcolo delle sequenze � associata con una e una sola costante logica: essa pu� introdurre la costante logica a destra della sequenza, oppure a sinistra della stessa.  Nel primo caso � detta \emph{regola logica K} (per Konsequenz) o \emph{regole logica R} (per right), nel secondo caso � detta \emph{regole logica A} (per Antezedens) o \emph{regole logica L} (per left). Esistono varie e interessanti ricerche (si veda per esempio \cite{prawitz2} e \cite{prooftheory}) che tracciano un parallelo fra, da una parte, le regole d�introduzione dei calcoli di deduzione naturale e le regole logiche K/R, e, dall�altra parte, le regole d�eliminazione nei calcoli di deduzione naturale e le regole A/L. 
+
+
+Per essere chiari su come siano fatte le regole logiche di un calcolo delle sequenze, mostriamo quelle d�introduzione della congiunzione. Da una parte abbiamo la regola $\wedge R$ che ha la forma seguente: 
+                          
+\vspace{0.2cm}
+
+                                     
+$$\infer[_{\wedge R}]{M\Rightarrow N, A\wedge B}{M\Rightarrow N, A \qquad M\Rightarrow N, B}$$
+
+\vspace{0.2cm}
+
+
+\noindent Questa regola ci dice che, se abbiamo due sequenze che solo si distinguono fra loro  per il fatto di contenere una la formula A e l�altra la formula B a destra della sequenza, allora possiamo usarle come premesse per inferire la sequenza $M\Rightarrow N, A\wedge B$.  Per quanto riguarda l�introduzione della congiunzione a sinistra della sequenza, abbiamo in questo caso due regole che hanno la seguente forma:
+\vspace{0.2cm}
+
+                   
+$$\infer[_{\wedge L_{1}}]{A\wedge B, M\Rightarrow N}{A, M\Rightarrow N}\qquad\infer[_{\wedge L_{2}}]{A\wedge B, M\Rightarrow N}{B, M\Rightarrow N}$$
+
+\vspace{0.2cm}
+
+
+\noindent Ciascuna di esse ci permette di passare da una sequenza contenente alla sua sinistra un certo congiunto ad una sequenza contenente alla sua sinistra la corrispondente congiunzione.
+Un altro esempio di regole logiche del calcolo delle sequenze sono le regole che concernono l�implicazione. Queste sono due ed hanno la seguente forma: 
+
+\vspace{0.2cm}
+
+$$\infer[_{\rightarrow L}]{A\rightarrow B, M\Rightarrow N}{M\Rightarrow N, A \qquad B, M\Rightarrow N}\qquad\qquad\infer[_{\rightarrow R}]{M\Rightarrow N, A\rightarrow B}{A, M\Rightarrow N, B}$$
+
+\vspace{0.2cm}
+
+ 
+Passiamo ora alle regole strutturali del calcolo delle sequenze che rappresentano il vero elemento innovatore della creazione gentzeniana.  Le regole strutturali, come suggerisce il loro stesso nome e a differenze di tutte le regole d�inferenza che abbiamo visto sinora, non concernono n� modificano la parte logica di un calcolo, bens� la sua parte strutturale. Esse dunque non si occupano di introdurre (n� tantomeno di eliminare) una o pi� costanti logiche, ma trasformano la configurazione stessa della sequenza (non essendo le sequenze altro che trascrizioni orrizzontali di derivazioni, le regole strutturali agiscono in fondo sulla struttura di una derivazione). Come lo stesso Gentzen le caratterizza:
+
+\begin{quotation}
+Nuove figure inferenziali sono richieste e non possono essere integrate nel nostro sistema d�introduzione e eliminazione; ma abbiamo il vantaggio di essere capaci di riservar loro un posto speciale nel nostro sistema, dato che non si riferiscono a simboli logici, ma meramente alla struttura del sistema. \cite[p. 82]{gentzen} \emph{(nostra traduzione)}
+\end{quotation}
+
+\noindent Alla luce di ci� che abbiamo detto sinora, la portata innovatrice della presenza delle regole strutturali in un sistema formale dovrebbe essere evidente: n� nei sistemi alla Hilbert n� in quelli di deduzione naturale, la parte strutturale di una logica emerge con tanta chiarezza e precisione. La sua identificazione  rappresenta non solo una ricchezza di per s�, ma anche, come vedremo, la via di accesso a interi nuovi campi di indagine.
+
+Vediamo pi� nel dettaglio come sono fatte le regole strutturali di un calcolo delle sequenze. Ne abbiamo quattro tipi: le regole di scambio, le regole di contrazione, le regole di attenuazione e la regole di cesura.
+Le regole di scambio hanno la forma seguente:
+
+$$\infer[_{EL}]{P, B, A, M\Rightarrow N}{P, A, B, M\Rightarrow N}\qquad\qquad\infer[_{ER}]{M\Rightarrow N, B, A, Q}{M\Rightarrow N, A, B, Q}$$
+
+\vspace{0.2cm}
+
+
+\noindent Esse permettono di cambiare l�ordine delle successioni di formule sia nell�antecedente che nel conseguente di una sequenza. Passiamo alle regole di contrazione che hanno la seguente forma:
+
+$$\infer[_{CL}]{A, M\Rightarrow N}{A, A, M\Rightarrow N}\qquad\qquad\infer[_{CR}]{M\Rightarrow N, A}{M\Rightarrow N, A, A}$$
+
+\vspace{0.2cm}
+
+
+\noindent Le regole di contrazione permettono di ridurre sia nell�antecedente che nel conseguente di una sequenza il numero di occorrenze di una stessa formula. Infine abbiamo le regole di attenuazione che si formulano nel modo seguente:
+
+$$\infer[_{WL}]{A, M\Rightarrow N}{M\Rightarrow N}\qquad\qquad\infer[_{WR}]{M\Rightarrow N, A}{M\Rightarrow N}$$
+
+\vspace{0.2cm}
+
+
+\noindent Le regole di attenuazione (o indebolimento) permettono di aggiungere una nuova occorrenza di una formula sia nell�antecedente che nel conseguente di una sequenza.
+Infine abbiamo la regola di cesura che � la seguente:
+
+$$\infer[_{Cut}]{M, P\Rightarrow N, Q}{M\Rightarrow N, A \qquad A, P\Rightarrow Q}$$
+
+\vspace{0.2cm}
+
+
+\noindent La regola di cesura (o di taglio) permette di tagliare una formula che occorre sia nell�antecedente di una sequenza che nel conseguente di un�altra sequenza.  La regola di cesura occuper� un posto di primo piano nella discussione della prossima sezione e dunque per il momento non la analizziamo oltre. Torniamo invece sulle regole di scambio, di contrazione e attenuazione e poniamo l�accento su tre punti importanti.
+Il primo punto pu� essere spiegato nel modo seguente. Quando abbiamo introdotto il concetto di sequenza, abbiamo detto che le sequenze sono oggetti sintattici della forma $M\Rightarrow N$, dove $M$ e $N$ sono successioni di formule. Vi sono due modi alternativi di descrivere le sequenze. Il primo lo si ottiene stabilendo che $M$ e $N$ non sono successioni di formule, bens� multi-insiemi di formule, ossia aggregati di formule in cui non conta la posizione di una formula, ma conta il numero delle sue occorrenze. La seconda maniera di descrivere alternativamente una sequenza la si ottiene assumendo che $M$ e $N$ sono insieme di formule, ossia aggregati di formule in cui non conta n� la posizione di una formula n� il numero delle sue occorrenze. Queste nuove maniere di descrivere le sequenze sono estremamente legate con le regole strutturali che devono essere assunte nel corrispondente calcolo delle sequenze. Se infatti si lavora con multi-insiemi piuttosto che con successioni di formule, le regole di scambio possono essere omesse visto che non svolgono pi� alcuna funzione; se si lavora con insiemi di formule, invece che con successioni o multi-insiemi, non solo non avremo pi� bisogno delle regole di scambio, ma nemmeno delle regole di contrazione.  Dunque, a seconda di come si definisce l�oggetto sequenza, diverse regole strutturali saranno assunte e utilizzate. (Un tale fatto � talvolta non adeguatamente messo in luce, ma � invece relativamente importante).
+
+Il secondo punto che vogliamo sottolineare rispetto alle regole strutturali � il loro impatto, per cosi dire, sulle regole logiche. Per spiegare tale punto nel migliore dei modi, prendiamo di nuovo in considerazione le regole che introducono a destra e a sinistra della sequenza la congiunzione. Queste regole, come abbiamo gi� visto, hanno la forma seguente:
+
+$$\infer[_{\wedge R}]{M\Rightarrow N, A\wedge B}{M\Rightarrow N, A \qquad M\Rightarrow N, B}$$
+
+$$\infer[_{\wedge L_{1}}]{A\wedge B, M\Rightarrow N}{A, M\Rightarrow N}\qquad\infer[_{\wedge L_{2}}]{A\wedge B, M\Rightarrow N}{B, M\Rightarrow N}$$
+
+\vspace{0.2cm}
+
+
+\noindent Un modo alternativo di formulare le regole per la congiunzione � il seguente:
+
+$$\infer[_{\wedge L*}]{A\wedge B, M\Rightarrow N}{A, B, M\Rightarrow N}\qquad\infer[_{\wedge R*}]{M, P\Rightarrow N, Q, A\wedge B}{M\Rightarrow N, A \qquad P\Rightarrow Q, B}$$
+
+
+\vspace{0.2cm}
+
+
+\noindent Attraverso le regole strutturali di scambio, contrazione e attenuazione si pu� facilmente mostrare che le regole $\wedge L_{1}$ e $\wedge L_{2}$ sono equivalenti alla regola $\wedge L*$ e che la regola $\wedge R$ � equivalente alla regola $\wedge R*$. Per amor di chiarezza e a guisa di esempio mostriamo l'equivalenza fra la regola   $\wedge L*$ e le regole $\wedge L_{1}$ e $\wedge L_{2}$. Abbiamo:
+
+$$\infer[_{\wedge L*}]{A\wedge B, M\Rightarrow N}{\infer[_{EL}]{A, B, M\Rightarrow N}{\infer[_{WL}]{B, A, M\Rightarrow N}{A, M\Rightarrow N}}}\qquad\quad
+\infer[_{\wedge L*}]{A\wedge B, M\Rightarrow N}{\infer[_{WL}]{A, B, M\Rightarrow N}{B, M\Rightarrow N}}$$
+
+\vspace{0.2cm}
+
+
+$$\infer[_{\wedge L_{2}}]{\infer[_{CL}]{A\wedge B, M\Rightarrow N}{A\wedge B, A\wedge B, M\Rightarrow N}}{\infer[_{EL}]{B, A\wedge B, M\Rightarrow N}{\infer[_{\wedge L_{1}}]{A\wedge B, B, M\Rightarrow N}{A, B, M\Rightarrow N}}}$$
+
+\vspace{0.2cm}
+
+
+La regole logiche per la congiunzione $\wedge L_{1}$, $\wedge L_{2}$ e $\wedge R$ prendono il nome di regole \emph{context-sharing}; le regole logiche $\wedge L*$ e $\wedge R*$ prendono il nome di regole \emph{context-free}. Nei calcoli delle sequenze per la logica classica e intuizionista introdotti da Gentzen, ogni costante logica ha le due versioni delle regole logiche che la introducono, una context-sharing, l�altra context-free. Per ogni costante logica, grazie alle regole strutturali di scambio, attenuazione e contrazione, si pu� mostrare che queste due versioni sono equivalenti. 
+
+Passiamo ora al terzo ed ultimo punto riguardante le regole strutturali di un calcolo delle sequenze. A partire dagli anni 1970 � iniziata a sorgere l�idea che per ragioni diverse e profonde (si veda per esempio \cite{restall}) si potesse o dovesse fare a meno di queste regole.  Sono cos� sorte le cosiddette \emph{logiche substrutturali}, ossia logiche che hanno meno struttura della logica classica e della logica intuizionista. Fra queste le pi� note sono le logiche rilevanti (si veda per esempio \cite{belnap}) e  le logiche lineari (si veda per esempio \cite{girard}).  Queste logiche rappresentano un campo di ricerca molto importante e prettamente legato alla teoria della dimostrazione: lo spunto per la loro creazione viene  infatti dal calcolo delle sequenze stesso e dalla sua capacit�, che abbiamo gi� sottolineato in precedenza, di far emergere la parte strutturale di una logica. 
+Si noti che nelle logiche substrutturali in cui le regole strutturali della logica classica e intuizionista non sono tutte disponibili, non si pu� pi� mostrare l�equivalenza della versione context-sharing e context-free delle regole logiche. Dunque, in tali logiche, le regole  $\wedge L_{1}$, $\wedge L_{2}$ e $\wedge R$ e le regole $\wedge L*$ e $\wedge R*$  non sono pi� considerate come due versioni delle regole per la congiunzione, ma come due diversi insiemi di regole che introducono  diversi connettivi. 
+
+
+Concludiamo la sezione dedicata al calcolo delle sequenze sottolineando che tale calcolo non solo � equivalente al corrispondente calcolo di deduzione naturale, ma anche ad un corrispondente sistema alla Hilbert o semantica appropriata. Infine si noti che, mentre il calcolo delle sequenze molto naturalmente si adatta al caso della logica classica, mentre risulta pi� artificioso per il caso della logica intuizionista, la situazione � completamente invertita nel caso del calcolo di deduzione naturale in cui le derivazioni sono estremamente semplici ed eleganti nel caso intuizionista e diventano invece pi� macchinose nel caso classico.
+
+
+
+\section{\textsc{L�analiticit� delle dimostrazioni}}
+
+La distinzione analitico-sintetico � una delle distinzioni che pi� ha animato e vivificato il dibattito filosofico; da Aristotele a I. Kant, da W. Leibnitz  a W. Quine, (quasi) ogni grande pensatore sembra aver dedicato tempo e concentrazione  alla comprensione e la definizione di tale binomio. In questa sezione parleremo di analitico e sintetico,  ma non in relazione a questa lunga tradizione filosofica, piuttosto rispetto a due diversi  metodi di prova. La relazione fra i due differenti usi dei termini analitico-sintetico � ben spiegata in \cite{hintikka}.
+
+
+Tradizionalmente vi sono varie maniere di distinguere un metodo di prova analitico da un metodo di prova sintetico. In geometria un argomento � usualmente detto analitico quando nessuna nuova costruzione, nel senso di nuova linea, nuovo cerchio o nuovo punto, � introdotto nella prova; un argomento � detto invece sintetico quando tali costruzioni sono usate.  
+Il metodo di prova sintetico pu� anche essere  identificato con il metodo deduttivo:  una prova sintetica � dunque una prova in cui si parte da certi assiomi per dedurre un certo teorema, mentre in una prova analitica il punto di partenza � proprio ci� che si vuole dimostrare e poi si risale s� verso gli assiomi. 
+Se infine vogliamo definire la dicotomia metodo analitico � metodo sintetico da un punto di vista che sia logicamente significativo, allora la distinzione deve articolarsi nei termini seguenti. In una concezione sintetica delle prove, le dimostrazioni sono caratterizzate dalla loro concisione; in una concezione analitica delle prove, l�enfasi va piuttosto su una progressiva riduzione della complessit� concettuale: nelle dimostrazioni analitiche si passa sistematicamente da idee pi� complesse a idee pi� semplici.  In altre parole, mentre le prove sintetiche hanno il vantaggio di essere corte, le prove analitiche possono essere viste come \emph{self-contained}: ogni elemento che occorre nella prova occorre anche nella conclusione.
+
+
+La preferenza per il metodo analitico ha una storia lunga ed illustre (per una discussione dettagliata si veda \cite{poggiolesi3}). Gi� Aristotele e Platone, ma anche il pitagoreo Ippocrate e il matematico Pappo, non celano la loro preferenza per questo tipo di prove. Nell�era moderna, R. Descartes, A. Arnauld e B. Pascal possono essere annoverati fra i sostenitori delle prove analitiche, mentre, alla fine dell�ottocento, il grande studioso Bernardo Bolzano inserisce fra i primi requisiti delle sue prove (eziologiche) la clausola dell�analiticit�. Un�estrema importanza alle prove analitiche viene accordata dallo stesso Gentzen che nell�ormai famoso passaggio seguente sostiene:
+
+
+\begin{quotation}
+Forse possiamo esprimere le propriet� essenziali di tale forma normale dicendo: non � ridondante. Nessun concetto entra nella prova se non quelli contenuti nel suo risultato finale e il loro uso � perci� fondamentale per stabilire tale conclusione. \cite[p. 91]{gentzen} \emph{(nostra traduzione)}
+\end{quotation}
+
+
+\noindent La rilevanza, l�interesse e l�attrattiva delle prove analitiche non � solo testimoniato da questa lunga lista di illustri pensatori, ma pu� anche facilmente essere apprezzata proprio riflettendo sulle parole di Gentzen. Nelle dimostrazioni analitiche in senso logico,  tutti i concetti che sono utilizzati nella prova sono contenuti nella conclusione; tale caratteristica ci assicura che la dimostrazione con cui stiamo lavorando � in qualche modo essenziale: niente entra in essa se non serve a derivare il risultato finale.
+
+
+Mettiamo ora in relazione le prove analitche dapprima con il calcolo delle sequenze e poi con il calcolo di deduzione naturale. Per fare questa operazione introduciamo innanzitutto una propriet�, ormai ben nota, che prende il nome di \emph{propriet� della sottoformula}. Un calcolo � detto soddisfare la propriet� della sottoformula se, e solo se, ogni teorema in esso dimostrabile possiede una derivazione tale che ogni formula che occorre in essa � una sottoformula della formula che occorre nella conclusione.  Una piccola riflessione � sufficiente per rendersi conto che la propriet� della sottoformula non � altro che il corrispettivo formale dell�idea di prova analitica di cui abbiamo sinora parlato. In altre parole, ogni prova analitica (in senso logico) rispetta la propriet� della sottoformula, e ogni prova che rispetta la propriet� della sottoformula deve essere considerata una prova analitica.
+
+Consideriamo ora il calcolo delle sequenze e ripensiamo alle sue regole logiche e strutturali (tutte tranne la regola di cesura). E� facile osservare che ciascuna di queste regole rispetta la propriet� della sottoformula: in ciascuna di esse ogni formula che compare nelle premesse � sottoformula di una delle formule che compare nella conclusione. Se dunque costruiamo una derivazione utilizzando solo e soltanto queste regole, possiamo essere certi che tale derivazione pu� e deve essere considerata una prova analitica, ossia una prova solo composta da elementi che sono parte della sua conclusione. Come abbiamo gi� accennato prima, a questa elegante armonia sfugge un'unica regola, ossia la regola di cesura. In tale regola, se analizzata dal basso in alto, introduciamo infatti una nuova formula che pu� non essere sottoformula  di nessuna delle formule che compongono la conclusione. La regola di cesura, se usata in una derivazione, porta dunque direttamente alla violazione della richiesta di analiticit�.  Per questa ragione essa merita un�analisi pi� approfondita.\footnote{Si vedano anche \cite{boolos, agomonda, smullyan}.}
+
+
+ Da una parte la regola di cesura rappresenta il corrispettivo formale di un�operazione che molto comunemente facciamo quando dimostriamo qualcosa, ossia l�impiego di risultati gi� stabiliti per abbreviare la prova. Se, nel bel mezzo di un argomento, ci rendiamo conto che tale argomento pu� essere accorciato sfruttando qualcosa (tipicamente un lemma) che abbiamo gi� in precedenza dimostrato, troviamo normale approfittare di una tale possibilit�. La regola di cesura non fa altro che catturare un tale tipo d�inferenza ed � per questo una regola naturale e estremamente rilevante. Dall�altra parte, come abbiamo gi� visto, essa racchiude e riproduce proprio l�elemento sintetico del fluire argomentativo: quando accorciamo la prova  introducendo elementi che non necessariamente compaiono nel risultato finale,  ci  allontaniamo da un procedere puramente analitico. 
+ 
+Sono proprio questi due aspetti dissonanti ma compresenti nella regola di cesura che fanno s� che, se da una parte Gentzen la include tra le regole strutturali dei suoi calcoli delle sequenze, dall�altra parte sottolinea la necessit� di mostrare la sua eliminabilit�. Il risultato principale di Gentzen nell�ambito dei calcoli delle sequenze � l�ormai arcinoto \emph{Hauptsatz} o \emph{teorema di eliminazione delle cesure}: esso consiste nella prova che la regola di cesura � in qualche modo ridondante, ossia che ogni derivazione che la contiene pu�  essere effettivamente trasformata in una derivazione in cui essa � completamente assente. Attraverso il teorema di eliminazione delle cesure, Gentzen mostra quindi che ogni prova sintetica  formulabile nei suoi calcoli delle sequenze pu� essere trasformata in una prova analitica.\footnote{Gentzen dimostra il teorema di eliminazione delle cesure per induzione primaria sulla complessit� della formula tagliata e per induzione secondaria sull'altezza delle derivazioni delle premesse della regola.}
+%;  in altre parole, ogni dimostrazione propria dei calcoli delle sequenze gode della propriet� della sottoformula.
+
+
+Il teorema di eliminazione delle cesure � un teorema abbastanza lungo e complesso da dimostrare. Il suo valore � grande  non solo al livello tecnico, ma anche concettuale. Al livello tecnico i vantaggi sono molteplici: in un calcolo che gode della propriet� della sottoformula � molto semplice dimostrare il teorema di decidibilit� o il teorema d�interpolazione. In pi�, come abbiamo gi� sottolineato nella sezione 2, � proprio l�ottenimento della propriet� della sottoformula che rende possibile per Gentzen di provare la consistenza dell�aritmetica, superando i teoremi limitativi di G\"odel (si veda la Sezione 2 punti c, d, e).
+  Per quanto riguarda, invece, l�importanza concettuale del teorema di eliminazione delle cesure, questa non � solo legata alla centralit� delle prove analitiche, di cui abbiamo gi� parlato nella prima parte di questa sezione, ma anche ad altri aspetti  filosofici che sono stati messi in luce da tanti studiosi (si veda per esempio \cite{avron, Indrezejczak})  negli ultimi settant�anni. In \cite{poggiolesi3}, per esempio, si propone un argomento puramente pragmatico a favore della dimostrazione dell�analiticit� di un calcolo: tale dimostrazione fa naturalmente emergere aspetti di una logica che resterebbero altrimenti sconosciuti.
+
+
+Riassumiamo brevemente quanto abbiamo detto sinora. Abbiamo introdotto la distinzione tra metodo di prova analitico e metodo di prova sintetico e abbiamo speso varie pagine per sottolineare il valore del primo rispetto al secondo. Abbiamo poi messo in relazione le prove analitiche con il calcolo delle sequenze. Una tale operazione � risultata relativamente semplice dato che nel calcolo delle sequenze vi � una sola regola , quella di cesura, che viola il requisito di analiticit�;  dunque, per mostrare che un calcolo � analitico, basta mostrare che tale regola � eliminabile. Chiudiamo ora la sezione mettendo in relazione il calcolo della deduzione naturale e l�idea delle prove analitiche. 
+
+
+Iniziamo innanzitutto col notare che nel calcolo della deduzione naturale non esiste l�equivalente della regola di cesura, ossia non abbiamo una e una sola regola a cui �attribuire tutta la colpa� e di cui mostrare la ridondanza. Questo ovviamente non significa che nel calcolo della deduzione naturale si possono solo costruire prove analitiche e non cՏ bisogno di dimostrare il corrispettivo dell�\emph{Hauptsatz}; la situazione � semplicemente pi� complicata. Per spiegarla in dettaglio, prendiamo in considerazione le regole d�introduzione ed eliminazione della congiunzione. Consideriamo l�applicazione consecutiva di queste regole, abbiamo:
+
+$$\infer[_{\wedge E_{1}}]{A}{\infer[_{\wedge I}]{A\wedge B}{\deduce{A}{\vdots^{d^{1}}} & \deduce{B}{\vdots^{d^{2}}}}}$$
+
+ 
+\noindent ComՏ facile osservare, un tale schema d�inferenze produce una ridondanza: concludiamo infatti una formula A che era gi� disponibile come conclusione della derivazione $d_{1}$. Altrimenti detto, la derivazione qui sopra contiene una formula $A\wedge B$ che � stata introdotta senza una reale necessit�: essa non svolge alcun ruolo essenziale nella derivazione della conclusione A. Questo fenomeno si ripete per qualsiasi concatenazione di una regola d�introduzione con la corrispondente regola d�eliminazione. Vediamo per esempio le regole dell�implicazione:
+
+
+$$\infer[_{\rightarrow E}]{B}{\deduce{A}{\vdots^{d^{1}}} & \infer[]{A\rightarrow B}{\deduce{B}{\deduce{\vdots^{d^{2}}}{\cancel{A}}}}}$$
+
+
+\noindent Anche in questo caso deriviamo una formula B che era gi� disponibile come conclusione della derivazione $d_{2}$. La formula $A\rightarrow B$ � stata dunque introdotta inutilmente e non � una sottoformula della conclusione finale. 
+
+Questi passaggi inferenziali corrispondono a passaggi sintetici di una derivazione; nel 1965 Prawitz (si veda appunto \cite{prawitz2}) not� che di fatto questi sono tutti e i  soli passaggi non-analitici che si possono creare nelle derivazioni dei calcoli di deduzione naturale;\footnote{Stiamo leggermente semplificando.  Per una lista dettagliata di tutti i passaggi inferenziali che non soddisfano la propriet� della sottoformula si veda \cite{prawitz2}.} essi in qualche modo corrispondono ad applicazioni della regola di cesura nei calcoli delle sequenze.
+Cos� come nei calcoli delle sequenze il teorema principale � quello che mostra l�eliminabilit� della regola di cesura, allo stesso modo nei calcoli di deduzione naturale il teorema centrale � detto \emph{teorema di normalizzazione} � � quello in cui si mostra che ciascuno dei passaggi inferenziali che non soddisfano la propriet� della sottoformula, ossia i passaggi composti dall'applicazione di una regola d�introduzione seguita dall'applicazione della corrispondente regola di eliminazione, pu� essere eliminato, o meglio ridotto, ad uno schema inferenziale che soddisfa la propriet� della sottoformula. Pi� precisamente, il teorema di normalizzazione dice che ogni derivazione del calcolo di deduzione naturale contenente le ridondanze di cui abbiamo parlato sinora pu� essere trasformata, applicando ripetutamente le dovute riduzioni, in una derivazione in cui nessuna ridondanza occorre, ossia una derivazione cosiddetta \emph{normale}. 
+Le prove normali dei calcoli di deduzione naturale sono prove analitiche; esse costituiscono il punto d�arrivo di un lungo percorso non solo tecnico-matematico, ma anche filosofico-concettuale.
+
+Concludiamo la sezione sottolineando che il teorema di normalizzazione, cos� come il teorema di eliminazione delle cesure, rappresenta la base per la dimostrazione di numerosi e interessanti risultati. Tra questi menzioniamo il seguente che ci sembra particolarmente significativo per ci� che diremo nella prossima sezione. E� possibile far vedere che in logica intuizionista tutte le derivazioni normali e chiuse � ossia che non contengono alcuna assunzione non scaricata � terminano con una regola d�introduzione. Tale risultato � stato stabilito in \cite{Prawitz}.
+
+
+\section{\textsc{Regole come definizioni}}
+
+Come abbiamo gi� sottolineato nella Sezione 3, una delle principali motivazioni gentzeniane per introdurre il calcolo di deduzione naturale � la maggiore prossimit� di tale calcolo al nostro modo informale di ragionare matematicamente. Da un punto di vista epistemico, questo � indubbiamente un enorme vantaggio. Come ha acutamente osservato il logico H. B. Curry, tale vantaggio epistemico non � il solo: il calcolo di deduzione naturale ci offre, infatti, anche un nuovo approccio, puramente anti-realista, all�annosa questione del significato delle costanti logiche.
+
+\begin{quotation}
+Nella sua tesi dottorale Gentzen ha presentato un nuovo approccio al calcolo logico la cui caratteristica principale � di porre l�enfasi su regole inferenziali che sembrano generarsi naturalmente dal significato come questo � intuitivamente concepito. E� appropriato chiamare questo tipo di approccio, approccio inferenziale. [�]
+Il contenuto essenziale del sistema � racchiuso nelle regole inferenziali (o deduttive). All�eccezione di poche e abbastanza banali regole d�inferenza di natura particolare, le altre sono associate con operazioni logiche; e quelle che sono associate con operazioni logiche esprimono il significato di tali operazioni. \cite[119-120]{curry}\emph{(nostra traduzione)}
+\end{quotation}
+
+
+Sebbene la citazione di Curry sia chiara e comprensibile, ci rendiamo conto che abbiamo forse corso troppo. Facciamo un passo indietro e cerchiamo innanzitutto di presentare, in modo breve ma preciso, il problema del significato delle costanti logiche. Secondo una prospettiva tradizionalista, che possiamo anche chiamare propria della teoria dei modelli, il significato delle costanti logiche di un linguaggio � semplicemente dato dalle loro condizioni di verit�; dunque il significato di una congiunzione � stabilito dal fatto che questa � vera se, e solo se, entrambi i suoi congiunti sono veri; il significato di una disgiunzione � stabilito dal fatto che questa �  vera se, e solo se, almeno un disgiunto � vero, e cos� via.  Si tratta di una posizione prettamente realista, nel senso che essa chiama in gioco l�idea di una realt� predeterminata e indipendente dalle nostre facolt� epistemiche. 
+A tale posizione realista si oppone una concezione anti-realista del significato delle costanti logiche: secondo quest�ultima il significato delle espressioni di un linguaggio � imprescindibilmente legato all�uso che facciamo di tali espressioni (per una buona introduzione alla teoria anti-realista del significato si veda il profilo su Prawitz, redatto da L. Tranchini). Nel caso delle costanti logiche, l�uso non pu� che essere di natura inferenziale. Dunque, secondo una teoria anti-realista, sole le regole inferenziali possono descrivere il significato delle costanti logiche;  le regole d�introduzione del calcolo di deduzione naturale assolvono esattamente tale funzione. Si noti che il primo ad aver proposto e abbracciato una tale posizione � Gentzen stesso che, nella seguente fugace osservazione, ormai menzionata in ogni volume di filosofia della logica, dichiara:
+
+\begin{quotation}
+Le regole d�introduzione rappresentano le �definizioni� del simbolo che introducono, e le regole di eliminazione non sono altro, in ultima analisi, che le conseguenze di tali definizioni. \cite[p. 80]{gentzen}  \emph{(nostra traduzione)}
+\end{quotation}
+
+
+A partire dagli anni `60 queste parole di Gentzen hanno dato vita ad un vero e proprio trend filosofico che � stato sviluppato da studiosi del calibro di M. Dummett, D. Prawitz, N. Tennant e P. Schroeder-Heister e che prende il nome di \emph{proof-theoretic semantics} (per una introduzione si veda \cite{SchroederHeister}).  La proof-theoretic semantics si occupa di analizzare e investigare il rapporto fra le regole del calcolo di deduzione naturale e il significato delle costanti logiche che queste concernono.
+
+
+La situazione dovrebbe ora essere pi� chiara rispetto al ruolo giocato dal calcolo della deduzione naturale nel contesto delle due maggiori ed opposte concezioni del significato delle costanti logiche. A questo punto, per�,  un curioso lettore potrebbe ragionevolmente chiedersi e chiedere se ci\`o che  si � detto delle regole d�introduzione del calcolo di deduzione naturale valga anche per le regole logiche del calcolo delle sequenze, ossia se anche quest�ultime possono essere viste come definizioni delle costanti logiche a cui sono legate.  Da quello che sappiamo dagli scritti di Gentzen, il nostro autore non riconosce alle regole logiche dei calcoli delle sequenze nient�altro che un ruolo strumentale legato alla dimostrazione del teorema di eliminazione delle cesure. Una tale posizione � stata per� negli ultimi anni rivista:  oggigiorno si pensa infatti che Gentzen abbia in realt� sottovalutato la portata filosofica della sua seconda creatura. Matematici e filosofi del calibro di A. Avron, K. Do\v{s}en, G. Sambin, P. Schroeder-Heister e H. Wansing hanno infatti insistito e argomentato a favore di una concezione secondo la quale anche le regole K/R dei calcoli delle sequenze definirebbero le costanti logiche che introducono a destra della sequenza (per una introduzione a tale tema si veda \cite{poggiolesi}). In questo quadro, le regole A/L, esattamente come le regole d�eliminazione della deduzione naturale, non sarebbero altro che le conseguenze di tali definizioni. Se si abbraccia e condivide questa posizione, che troviamo assolutamente ragionevole, dobbiamo far fronte ad una questione che era assente nel caso del calcolo di deduzione naturale, ossia quella del ruolo e della funzione delle regole strutturali nella determinazione del significato delle costanti logiche.  A proposito di tale questione, varie posizioni filosofiche si sono delineate. Secondo alcuni autori (vedi \cite{wansing}) le costanti logiche hanno due significati, uno \emph{operazionale} e l�altro \emph{globale}: il primo � dato dalle regole d�introduzione K/R, il secondo � dato dalle sequenze che sono dimostrabili in un calcolo, ossia dalle regole logiche unite alle regole strutturali. Altri studiosi pi� estremisti (vedi \cite{dosen}) sostengono invece che,  non essendo la logica altro che struttura, il significato delle costanti logiche � unicamente determinato dalle regole strutturali.  In \cite{poggiolesi}, difendiamo una posizione ancora diversa che pu� essere spiegata nel modo seguente. Esiste una versione alternativa del calcolo delle sequenze che � stata messa in luce dal matematico Dragalin (si veda \cite{dragalin}) e che prende usualmente il nome di \emph{variante logica} del calcolo delle sequenze. Essa � composta dagli assiomi nella loro forma generalizzata e poi, per ogni costante logica, da una regola A/L e una regola K/R, una in versione context-sharing e l�altra in versione context-free (per una maggiore precisione su quali regole esattamente devono essere scelte si veda \cite{prooftheory}). In tale versione del calcolo delle sequenze non vi � alcuna regola strutturale: si pu� dimostrare infatti che queste sono state in qualche modo assorbite dagli assiomi e dalle regole logiche, ossia, in termini leggermente pi� tecnici, si  pu� dimostrare che tutte le regole strutturali sono ammissibili. Si noti che tale variante logica del calcolo delle sequenze ricorda in maniera profonda il calcolo di deduzione naturale dove appunto non ci sono regole strutturali (che sono per cos� dire nascoste nella struttura del calcolo).  La nostra idea � molto semplice: sono le regole logiche di questa variante del calcolo delle sequenze che definiscono il significato delle costanti logiche che introducono. Esse, infatti, non solo assimilando le regole strutturali del calcolo delle sequenze, risolvono naturalmente la questione del loro ruolo nella precisazione del significato delle costanti, ma inoltre, rappresentando il genuino corrispettivo delle regole del calcolo di deduzione naturale, costituiscono la migliore opzione a cui guardare per trasportare fedelmente le osservazioni di Gentzen al caso del calcolo delle sequenze. 
+
+
+Terminiamo la sezione con la seguente fondamentale osservazione. Nel momento in cui si sposa la concezione secondo la quale le regole logiche del calcolo di deduzione naturale o del calcolo delle sequenze possono e devono essere viste come le definizioni delle costanti che introducono, tali regole devono soddisfare alcuni criteri di adeguatezza.  Come infatti ha mostrato chiaramente Prior (si veda  \cite{prior}) con il celebre esempio del connettivo \emph{tonk}, se non si hanno tali criteri di adeguatezza, allora siamo costretti ad accettare il fatto che due regole qualsiasi riescono a descrivere una qualsiasi  nuova costante e  ci� porta direttamente a problemi di inconsistenza.
+La ricerca dei criteri di adeguatezza per le regole logiche dei calcoli di Gentzen ha interessato ed interessa tuttora numerosi e illustri studiosi (per esempio \cite{dosen, Dummett, Indrezejczak, kremer, wansing}); grazie ai loro risultati, sono state messe in luce molteplici e interessanti propriet� quali l�\emph{armonia}, l�\emph{unicit�}, la \emph{conservativit�}. Le stesse dimostrazioni del teorema di normalizzazione o il teorema di eliminazione delle cesure contano come alcune delle caratteristiche che queste regole devono soddisfare. Non � questo il luogo per entrare in dettagli  che esulerebbero dallo specifico contenuto di questo profilo. Una lista completa ed esaustiva di tutti i requisiti che le regole dei calcoli gentzeniani devono avere, seguita da una loro discussione, pu� essere trovata in \cite{poggiolesi}.
+
+
+\section{\textsc{Gentzen oggi: i contemporanei sviluppi della teoria della dimostrazione}}
+
+
+Abbiamo deciso di concludere questo profilo dedicato al grande matematico tedesco Gherrd Gentzen esponendo brevemente il tipo di ricerche odierne a cui i risultati da lui stabiliti nei primi anni trenta hanno dato vita. Sottolineiamo che il proposito non � quello di stilare una lista esaustiva di tutti i rami della teoria della dimostrazione di cui si occupano i logici contemporanei: onestamente parlando, un tale lavoro richiederebbe conoscenze e competenze che non abbiamo e che comunque sono troppo specifiche per questo tipo di profilo. Citeremo dunque sole quelle ricerche che riteniamo pi� importanti e che si situano all�intersezione tra filosofia, logica e matematica. 
+
+Cominciamo la nostra breve esposizione, dividendo gli studi contemporanei concernenti la teoria della dimostrazione in studi pi� tecnici e studi pi� filosofici. Da un punto di vista pi� tecnico vi sono almeno tre grandi direzioni in cui la contemporanea teoria della dimostrazione si � articolata. La prima di queste direzioni consiste nell�elaborazione di nuovi tipi di calcolo alternativi alla deduzione naturale o al calcolo delle sequenze.  Tra tali calcoli ricordiamo il \emph{calcolo della risoluzione} introdotto da \cite{robinson}, i \emph{tableaux} introdotti da \cite{tableaux},  i \emph{proof-nets} introdotti da \cite{girard}, ed infine il pi� recente \emph{calcolo delle strutture} introdotto da \cite{guglielmi}. Mentre la motivazione principale per l�introduzione dei proof-nets e del calcolo delle strutture � quella di migliorare il calcolo delle sequenze, per quanto riguarda i tableaux e il calcolo di risoluzione si tratta semplicemente di modi alternativi (entrambi basati sull'idea di generare contraddizioni logiche piuttosto che dimostrare verit� logiche) di costruire le derivazioni. 
+
+Per quanto riguarda la seconda delle direzioni tecniche in cui la teoria della dimostrazione si � articolata, questa consiste nel tentativo di adattare il calcolo di deduzione naturale o il calcolo delle sequenze alle tante nuove logiche che popolano il mercato contemporaneo: abbiamo gi� parlato delle logiche substrutturali, ma abbiamo anche le logiche modali, le logiche dinamiche, le logiche quantistiche e molte altre. In gran parte di questi i casi, i calcoli creati da Gentzen vengono letteralmente estesi e il loro potere espressivo aumentato. Tale operazione � compiuta in molteplici modi diversi: introducendo labels semantici (si veda \cite{gabbay}), aumentando i simboli metalinguistici del calcolo (si veda \cite{belnap2}), lavorando con pi� sequenze alla volta (si veda \cite{avron}).   Vari e interessanti studi sono stati condotti su queste estensioni: vi sono studi comparativi (si veda per esempio \cite{io6, Ramanayake}), cos� come interessanti studi di classificazione (si veda per esempio \cite{ciabattoni, ciabattoni2}). In \cite{poggiolesi} l�interessato lettore pu� trovare una presentazione sistematica e (quasi) esaustiva di tutte queste estensioni.
+
+
+Per quanto riguarda la terza ed ultima direzione tecnica in cui la teoria della dimostrazione si � articolata, questa � di natura pi� propriamente informatica. Il calcolo delle sequenze, molto pi� del calcolo di deduzione naturale, � stato infatti implementato e quindi usato per risolvere procedure di decisione e calcolare misure di complessit� computazionale (si veda per esempio \cite{cc}).   Si tratta di lavori molto specifici su cui non ci dilunghiamo oltre ma che servono per far intuire i vastissimi sviluppi degli studi del nostro logico tedesco.
+
+
+Per quanto riguarda le diramazioni contemporanee pi� filosofiche in teoria della dimostrazione, queste concernono essenzialmente due ambiti: da una parte la gi� menzionata proof-theoretic semantics e pi� in generale la concezione anti-realista del significato delle espressioni del linguaggio; dall'altra un'analisi di natura storico-filosofico dei risultati di Gentzen. Per quanto riguarda il primo ambito, assistiamo oggigiorno ad una vera e propria esplosione di articoli e ricerche dedicate allo studio delle propriet� che le regole logiche dei calcoli alla Gentzen devono soddisfare (si veda per esempio \cite{read, read2} ), al rapporto fra regole logiche e regole strutturali  (si veda per esempio \cite{dosen, poggiolesi10}), alle conseguenze concettuali di una concezione antirealtista del senso delle costanti logiche (si veda per esempio \cite{dummett8, tennant}), alla riflessione sull'esistenza di cos� tanti calcoli diversi e alla loro sistematizzazione (si veda per esempio \cite{sambin, Steinberger}), ai rapporti fra calcolo delle sequenze e calcolo di deduzione naturale (si veda \cite{avron10, tennant2}).
+  
+
+Per quanto riguarda il secondo ambito di ricerca, ossia quello concernente un approccio di natura pi� storica al lavoro del nostro matematico tedesco, da un lato si � cercato di mettere in risalto il rapporto fra Gentzen e P. Hertz, un fisico tedesco che avrebbe preceduto i risultati di Gentzen sulla parte strutturale dei suoi calcoli (si veda per esempio \cite{Schroeder-Heister3, vonplato}, ma anche la parte 1 di \cite{beziau});  dall'altra parte tra Gentzen e O. Ketonen (si veda \cite{ketonen}), lo studente pi� prossimo che Gentzen abbia mai avuto, che ha contribuito allo sviluppo dei calcoli del suo mentore.
+Ancora pi� recenti sono gli studi che mettono in relazione Gentzen con un altro grandissimo logico ottocentesco, il boemo B. Bolzano. Tali studi (si veda per esempio \cite{casari2, rumberg}) concernono il rapporto fra le prove del perch� cos� com'erano concepite da Bolzano e le prove normali di deduzione naturale in Gentzen. 
+
+
+
+\section{\textsc{Bibliografia Primaria}}
+
+
+
+Dividiamo la bibliografia in due sezioni principali: una completamente dedicata all'enumerazione degli articoli, postumi e non, di Gherard Gentzen; l'altra alle opere citate nel testo.
+
+\vspace{0.6cm}
+
+
+ Gentzen, G. (1932), G\"uber die Existenz unabh�ngiger Axiomensysteme zu unendlichen Satzsystemen, \emph{Mathematische Annalen}, pp. 329�350. 
+
+\vspace{0.1cm}
+
+ Gentzen, G. (1934), Untersuchungen �ber das logische Schlie�en. I, \emph{Mathematische Zeitschrift}, pp. 176�210.
+ 
+ \vspace{0.1cm}
+
+
+ Gentzen, G. (1935), Untersuchungen �ber das logische Schlie�en. II,  \emph{Mathematische Zeitschrift}, pp. 405�431. 
+ 
+ \vspace{0.1cm}
+
+
+Gentzen, G. (1936a), Die Widerspruchsfreiheit der Stufenlogik, \emph{Mathematische Zeitschrift}, pp.  357�366. 
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1936b), Die Widerspruchsfreiheit der reinen Zahlentheorie, \emph{Mathematische Annalen}, pp. 493�565. 
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1936c), Der Unendlichkeitsbegriff in der Mathematik. Vortrag, gehalten in M�nster am 27. Juni 1936 am Institut von Heinrich Scholz, \emph{Semester-Berichte M�nster}, pp. 65�80.  (Lecture hold in M�nster at the institute of Heinrich Scholz on 27 June 1936)
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1937), Unendlichkeitsbegriff und Widerspruchsfreiheit der Mathematik, \emph{Actualit�s scientifiques et industrielles}, pp. 201�205.
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1938a), Die gegenw�rtige Lage in der mathematischen Grundlagenforschung, \emph{Deutsche Mathematik}, pp. 255�268. 
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1938b), Neue Fassung des Widerspruchsfreiheitsbeweises f�r die reine Zahlentheorie, \emph{Forschungen zur Logik und zur Grundlegung der exakten Wissenschaften}, pp. 19�44. 
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1943). Beweisbarkeit und Unbeweisbarkeit von Anfangsf�llen der transfiniten Induktion in der reinen Zahlentheorie,  \emph{Mathematische Annalen}, pp. 140�161.
+
+
+\vspace{0.3cm}
+
+\noindent\textbf{Editi Postumi}
+
+
+\vspace{0.3cm}
+
+
+
+Gentzen, G. (1954), Zusammenfassung von mehreren vollst�ndigen Induktionen zu einer einzigen, \emph{Archiv f�r mathematische Logik und Grundlagenforschung}, pp.  81�93.
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1974a), Der erste Widerspruchsfreiheitsbeweis f�r die klassische Zahlentheorie,  \emph{Archiv f�r mathematische Logik und Grundlagenforschung},  pp. 97�118. 
+
+\vspace{0.1cm}
+
+
+Gentzen, G. (1974b), �ber das Verh�ltnis zwischen intuitionistischer und klassischer Arithmetik, \emph{Archiv f�r mathematische Logik und Grundlagenforschung}, pp.  119�132. 
+
+\vspace{0.1cm}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Traduzioni in Italiano}
+
+
+\vspace{0.3cm}
+
+Cagnoni, D. (1981), Teoria della Dimostrazione, Feltrinelli.  
+
+
+\bibliographystyle{apacite}
+
+\bibliography{at_aphex}
+
+\clearpage
+
+\include{copyright}
+
+\end{document}

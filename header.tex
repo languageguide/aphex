@@ -1,0 +1,91 @@
+% \usepackage{hyperref} turns cross-references into hypertext links
+\usepackage{times}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{apacite} % APA style bibliography
+\usepackage{anyfontsize}
+\usepackage[bottom]{footmisc}
+\usepackage{letterspace} % for custom spacing between chars
+\usepackage{soul} % for breaking underlined lines
+
+% ridefinizione comandi bibliografia
+
+\renewcommand{\BBAA}{}
+\renewcommand{\BBAB}{e}
+\renewcommand{\BBOQ}{``}
+\renewcommand{\BBCQ}{''}
+\setlength{\bibleftmargin}{18pt}
+\setlength{\bibindent}{-18pt}
+
+% virgolette caporali
+\newcommand{\lcap}{{\fontencoding{T1}\selectfont\guillemotleft}}
+\newcommand{\rcap}{{\fontencoding{T1}\selectfont\guillemotright}}
+
+\newtheorem{prin}{Principio}[sezione]
+\newtheorem{blap}{Assioma}[sezione]
+\newtheorem{blip}{Lemma}[sezione]
+\newtheorem{para}{Paradosso}[sezione]
+% relazione di transizione
+\newcommand{\arrow}[1]
+        {\, {\auxarrow\limits^{#1}} \,}
+\newcommand{\auxarrow}
+	{\mathop{- \!\!\!\! \rightarrow}}
+
+% size titolo
+
+\newcommand{\mybig}[1]
+{\fontsize{36}{36}\selectfont #1}
+\newcommand{\mynine}[1]
+{\fontsize{9}{9}\selectfont #1}
+\newcommand{\mysixt}[1]
+{\fontsize{16}{16}\selectfont #1}
+
+\linespread{2} % interlinea
+\addtolength{\footnotesep}{1mm}
+% comandi per personalizzare header e footer
+
+\setlength{\topmargin}{0mm}
+\setlength{\textwidth}{15cm}
+\setlength{\textheight}{22.6cm}
+\setlength{\marginparwidth}{0mm}
+\setlength{\marginparsep}{0mm}
+\setlength{\oddsidemargin}{14pt}
+\setlength{\evensidemargin}{14pt}
+\addtolength{\hoffset}{-2pt}
+\addtolength{\voffset}{-8mm}
+\setlength{\parindent}{0pt}
+\setlength{\footskip}{11mm}
+\setlength{\headsep}{9mm}
+
+\pagestyle{fancy} 
+
+\fancyhf{} % clear all headers and footers
+\let\headwidth\textwidth
+\lhead{
+\mynine{Francesca Poggiolesi -- Profilo di \textit{Gherard Gentzen \\[1mm] \mbox{}}}}
+\rhead{\includegraphics[width=39.09mm]{aphex}}
+%\rhead{\includegraphics{logo2}}
+\rfoot{\sffamily \scriptsize{Periodico On-line / ISSN 2036-9972}}
+\newlength\FHleft
+\newlength\FHright
+\setlength\FHleft{-2mm}
+\setlength\FHright{-2mm}
+\newbox\FHline
+\setbox\FHline=\hbox{\hsize=\paperwidth%
+  \hspace*{\FHleft}%
+  \rule{\dimexpr\headwidth-\FHleft-\FHright\relax}{\headrulewidth}\hspace*{\FHright}%
+}
+\renewcommand\headrule{\vskip-1\headrulewidth\copy\FHline}
+
+\fancypagestyle{front}{
+\fancyhf{} % clear all headers and footers
+\let\headwidth\textwidth
+\renewcommand\headrule{}
+\renewcommand{\footrulewidth}{0pt}
+\lhead{\vspace*{28pt}}
+\rhead{}
+\rfoot{\vspace*{21pt}\sffamily \scriptsize{Periodico On-line / ISSN 2036-9972}}}
